@@ -1,0 +1,1 @@
+(()=>{"use strict";console.log(123);console.log(8);let o=[2,8,10,79].reduce(((o,e)=>o+e),0);console.log(o)})();
