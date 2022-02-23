@@ -15,7 +15,18 @@ module.exports = {
             {
                 test: /\.less$/,
                 use: ['style-loader', 'css-loader', 'less-loader'],
-            }
+            },
+            { // webpack5 版本
+                test: /\.(gif|png|jpg|jpeg)$/,
+                type: 'asset'
+            },
+            {
+                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'fonts/[name].[hash:6][ext]'
+                }
+            },
         ]
     },
     plugins: [
