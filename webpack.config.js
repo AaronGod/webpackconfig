@@ -1,5 +1,8 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const devMode = process.env.NODE_ENV !== "production"
+
 module.exports = {
     mode: 'production',
     entry: './src/index.js',
@@ -10,11 +13,11 @@ module.exports = {
     module: {
         rules: [{
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
+                use: [devMode ? "style-loader" : MiniCssExtractPlugin.loader, 'css-loader'],
             },
             {
                 test: /\.less$/,
-                use: ['style-loader', 'css-loader', 'less-loader'],
+                use: [devMode ? "style-loader" : MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
             },
             { // webpack5 版本
                 test: /\.(gif|png|jpg|jpeg)$/,
@@ -42,8 +45,10 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: './public/index.html'
-        })
-    ],
+        }),
+
+    ].concat(devMode ? [] : [new MiniCssExtractPlugin()]),
+
     devServer: {
         port: 3000
     }
